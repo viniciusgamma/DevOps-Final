@@ -28,7 +28,7 @@ jobs:
         run: docker build -t flask-app .
 
       - name: 🔍 Rodando Testes
-        run: docker run --rm flask-app python test_app.py
+        run: docker run --rm flask-app python testes.py
 
   deploy:
     name: 🚀 Deploy para Render
