@@ -1,0 +1,40 @@
+name: CI + Deploy Flask para Render
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: 🔧 Build da Aplicação
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout do Código
+        uses: actions/checkout@v3
+
+      - name: 🏗️ Construindo Imagem Docker
+        run: docker build -t flask-app .
+
+  test:
+    name: 🧪 Executar Testes
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: 📥 Checkout do Código
+        uses: actions/checkout@v3
+
+      - name: 🧱 Build para Testes
+        run: docker build -t flask-app .
+
+      - name: 🔍 Rodando Testes
+        run: docker run --rm flask-app python test_app.py
+
+  deploy:
+    name: 🚀 Deploy para Render
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: 📡 Disparar Deploy na Render
+        run: |
+          curl -X POST "https://api.render.com/deploy/srv-d0vobsjipnbc7384dppg?key=nBtT9GS3FUQ"
