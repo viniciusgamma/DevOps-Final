@@ -3,7 +3,7 @@ name: CI + Deploy Flask para Render
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
